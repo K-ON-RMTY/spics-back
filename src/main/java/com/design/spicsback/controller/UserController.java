@@ -50,7 +50,16 @@ public class UserController {
      * @return 用户数据
      */
     @PostMapping("register")
-    public User insertOne(User user) {
-        return this.userService.insert(user);
+    public Information insertOne(User user) {
+        // 保证用户名唯一
+        User checkRepeat = this.userService.queryByUserName(user.getUsername());
+        if (checkRepeat != null) {
+            return Information.error(300,"用户名重复");
+        }
+        User register = this.userService.insert(user);
+        if (register == null) {
+            return Information.error(500,"注册失败，重试");
+        }
+        return Information.success("注册");
     }
 }

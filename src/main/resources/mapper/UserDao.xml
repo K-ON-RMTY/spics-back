@@ -19,6 +19,12 @@
         from spics.t_user
         where username = #{username} and password = #{password}
     </select>
+    <!--  根据用户名查询  -->
+    <select id="queryByUserName" resultMap="TUserMap">
+        select username, id, password, introduce, avatar, follow_num, register_date, fans_num
+        from spics.t_user
+        where username = #{username}
+    </select>
     <!--查询单个-->
     <select id="queryById" resultMap="TUserMap">
         select
@@ -70,8 +76,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into spics.t_user(username, password, introduce, avatar)
-        values (#{username}, #{password}, #{introduce}, #{avatar})
+        insert into spics.t_user(username, password)
+        values (#{username}, #{password})
     </insert>
 
     <!--通过主键修改数据-->

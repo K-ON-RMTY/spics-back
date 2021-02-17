@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService {
     public User queryById(Integer id) {
         return this.userDao.queryById(id);
     }
+
+    @Override
+    public User queryByUserName(String username) {
+        return this.userDao.queryByUserName(username);
+    }
 }

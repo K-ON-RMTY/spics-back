@@ -48,4 +48,6 @@ public interface UserService {
     User queryByUserNameAndPwd(String username, String password);
 
     User queryById(Integer id);
+
+    User queryByUserName(String username);
 }

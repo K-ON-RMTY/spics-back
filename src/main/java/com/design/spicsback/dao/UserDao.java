@@ -63,4 +63,6 @@ public interface UserDao {
     int deleteById(Integer id);
 
     User queryByUserNameAndPwd(String username, String password);
+
+    User queryByUserName(String username);
 }
