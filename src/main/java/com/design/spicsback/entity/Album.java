@@ -14,8 +14,6 @@ public class Album implements Serializable {
     private Integer id;
     
     private String albumName;
-    //画集标签表的id
-    private Integer albumTagId;
     
     private String albumDescription;
     
@@ -42,13 +40,7 @@ public class Album implements Serializable {
         this.albumName = albumName;
     }
 
-    public Integer getAlbumTagId() {
-        return albumTagId;
-    }
 
-    public void setAlbumTagId(Integer albumTagId) {
-        this.albumTagId = albumTagId;
-    }
 
     public String getAlbumDescription() {
         return albumDescription;
