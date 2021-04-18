@@ -1,5 +1,6 @@
 package com.design.spicsback.controller;
 
+import com.design.spicsback.entity.Information;
 import com.design.spicsback.entity.Like;
 import com.design.spicsback.service.LikeService;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,26 @@ public class LikeController {
     @GetMapping("selectOne")
     public Like selectOne(Integer id) {
         return this.likeService.queryById(id);
+    }
+
+    @PostMapping("addOne")
+    public Information addOne(Like like){
+        Like isSuccess=this.likeService.insert(like);
+        if(isSuccess == null){
+            return Information.error(203,"失败");
+        }else {
+            return Information.success("点赞成功");
+        }
+    }
+
+    @PostMapping("deleteOne")
+    public Information deleteOne(Like like){
+        boolean isDeleted=this.likeService.deleteByUserIdAndPicId(like);
+        if(isDeleted){
+            return Information.success("删除成功");
+        }else{
+            return Information.error(301,"删除失败");
+        }
     }
 
 }

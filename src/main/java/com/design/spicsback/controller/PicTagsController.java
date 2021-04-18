@@ -1,5 +1,6 @@
 package com.design.spicsback.controller;
 
+import com.design.spicsback.entity.Information;
 import com.design.spicsback.entity.PicTags;
 import com.design.spicsback.service.PicTagsService;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,21 @@ public class PicTagsController {
     @GetMapping("selectOne")
     public PicTags selectOne(Integer id) {
         return this.picTagsService.queryById(id);
+    }
+
+    /**
+     * 添加图片标签
+     * @param picTags
+     * @return
+     */
+    @PostMapping("addOne")
+    public Information addOne(PicTags picTags){
+        PicTags isSuccess = this.picTagsService.insert(picTags);
+        if(isSuccess!=null){
+            return Information.success("添加图片标签");
+        }else{
+            return Information.error(301,"添加图片标签失败");
+        }
     }
 
 }

@@ -76,4 +76,9 @@ public class PicTagsServiceImpl implements PicTagsService {
     public boolean deleteById(Integer id) {
         return this.picTagsDao.deleteById(id) > 0;
     }
+
+    @Override
+    public PicTags addOne(PicTags picTags) {
+        return this.picTagsDao.addOne(picTags);
+    }
 }

@@ -52,4 +52,5 @@ public interface PicTagsService {
      */
     boolean deleteById(Integer id);
 
+    PicTags addOne(PicTags picTags);
 }

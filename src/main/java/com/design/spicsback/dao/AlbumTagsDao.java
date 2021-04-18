@@ -62,4 +62,10 @@ public interface AlbumTagsDao {
      */
     int deleteById(Integer id);
 
+    /**
+     * 添加
+     * @param albumTags
+     * @return
+     */
+    AlbumTags addOne(AlbumTags albumTags);
 }

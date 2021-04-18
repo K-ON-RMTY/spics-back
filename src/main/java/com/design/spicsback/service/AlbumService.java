@@ -52,4 +52,17 @@ public interface AlbumService {
      */
     boolean deleteById(Integer id);
 
+    /**
+     * 查询用户所有的画集
+     * @param userId 用户主键
+     * @return 画集列表
+     */
+    List<Album> queryByUserId(Integer userId);
+
+    /**
+     * 查询是否重名
+     * @param album 画集
+     * @return 画集
+     */
+    Album queryByNameAndUserId(Album album);
 }

@@ -76,4 +76,15 @@ public class AlbumTagsServiceImpl implements AlbumTagsService {
     public boolean deleteById(Integer id) {
         return this.albumTagsDao.deleteById(id) > 0;
     }
+
+    /**
+     * 添加画集标签
+     *
+     * @param albumTags
+     * @return
+     */
+    @Override
+    public AlbumTags addOne(AlbumTags albumTags) {
+        return this.albumTagsDao.addOne(albumTags);
+    }
 }

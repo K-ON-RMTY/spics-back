@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @since 2021-02-22 00:03:10
  */
 @RestController
-@RequestMapping("tagForPic")
+@RequestMapping("tagforpic")
 public class TagForPicController {
     /**
      * 服务对象
@@ -37,6 +37,10 @@ public class TagForPicController {
     public Information insert(TagForPic tagForPic) {
         if (tagForPic.getTagName() == null || tagForPic.getTagName().trim().length() ==0) {
             return Information.error(300,"标签名长度错误");
+        }
+        TagForPic tag = tagForPicService.queryByTagName(tagForPic.getTagName());
+        if(tag != null) {
+            return Information.success(200,"已存在", tag);
         }
         TagForPic insert = tagForPicService.insert(tagForPic);
         if (insert != null) {

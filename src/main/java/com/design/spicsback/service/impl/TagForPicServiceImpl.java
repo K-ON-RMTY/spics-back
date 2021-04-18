@@ -76,4 +76,15 @@ public class TagForPicServiceImpl implements TagForPicService {
     public boolean deleteById(Integer id) {
         return this.tagForPicDao.deleteById(id) > 0;
     }
+
+    /**
+     * 查找标签名
+     *
+     * @param tagName
+     * @return
+     */
+    @Override
+    public TagForPic queryByTagName(String tagName) {
+        return tagForPicDao.queryByTagName(tagName);
+    }
 }

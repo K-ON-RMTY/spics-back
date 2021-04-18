@@ -62,4 +62,7 @@ public interface CollectDao {
      */
     int deleteById(Integer id);
 
+    Collect addOne(Collect collect);
+
+    int deleteByUserIdAndAlbumId(Collect collect);
 }

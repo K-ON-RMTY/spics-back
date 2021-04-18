@@ -61,5 +61,11 @@ public interface TagForPicDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
-
+    /**
+     * 查找标签名
+     *
+     * @param tagName
+     * @return
+     */
+    TagForPic queryByTagName(String tagName);
 }

@@ -1,6 +1,7 @@
 package com.design.spicsback.controller;
 
 import com.design.spicsback.entity.Collect;
+import com.design.spicsback.entity.Information;
 import com.design.spicsback.service.CollectService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,4 +33,33 @@ public class CollectController {
         return this.collectService.queryById(id);
     }
 
+    /**
+     * 添加收藏
+     * @param collect
+     * @return
+     */
+    @PostMapping("addOne")
+    public Information addOne(Collect collect){
+        Collect isSuccess=this.collectService.insert(collect);
+        if(isSuccess!=null){
+            return Information.success("点赞");
+        }else {
+            return Information.error(301,"点赞失败");
+        }
+    }
+
+    /**
+     * 删除收藏
+     * @param collect
+     * @return
+     */
+    @PostMapping("deleteOne")
+    public Information deleteOne(Collect collect){
+        boolean isDeleted = this.collectService.deleteByUserIdAndAlbumId(collect);
+        if(isDeleted){
+            return Information.success("收藏");
+        }else {
+            return Information.error(301,"收藏失败");
+        }
+    }
 }

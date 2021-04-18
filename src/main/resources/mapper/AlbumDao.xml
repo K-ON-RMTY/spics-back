@@ -15,15 +15,29 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TAlbumMap">
         select
-          id, album_name, album_tag_id, album_description, user_id, collect_num, like_num
+          id, album_name, album_description, user_id, collect_num, like_num
         from spics.t_album
         where id = #{id}
+    </select>
+    <!--  查询用户的画集  -->
+    <select id="queryByUserId" resultMap="TAlbumMap">
+        select
+            id, album_name,  album_description, user_id, collect_num, like_num
+        from spics.t_album
+        where user_id = #{userId}
+    </select>
+
+    <select id="queryByNameAndUserId" resultMap="TAlbumMap">
+        select
+            id, album_name,  album_description, user_id, collect_num, like_num
+        from spics.t_album
+        where user_id = #{userId} and album_name = #{albumName}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TAlbumMap">
         select
-          id, album_name, album_tag_id, album_description, user_id, collect_num, like_num
+          id, album_name, album_description, user_id, collect_num, like_num
         from spics.t_album
         limit #{offset}, #{limit}
     </select>
@@ -31,7 +45,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TAlbumMap">
         select
-          id, album_name, album_tag_id, album_description, user_id, collect_num, like_num
+          id, album_name, album_description, user_id, collect_num, like_num
         from spics.t_album
         <where>
             <if test="id != null">
@@ -39,9 +53,6 @@
             </if>
             <if test="albumName != null and albumName != ''">
                 and album_name = #{albumName}
-            </if>
-            <if test="albumTagId != null">
-                and album_tag_id = #{albumTagId}
             </if>
             <if test="albumDescription != null and albumDescription != ''">
                 and album_description = #{albumDescription}
@@ -60,8 +71,22 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into spics.t_album(album_name, album_tag_id, album_description, user_id, collect_num, like_num)
-        values (#{albumName}, #{albumTagId}, #{albumDescription}, #{userId}, #{collectNum}, #{likeNum})
+
+        insert into spics.t_album
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            album_name, user_id,
+            <if test="albumDescription != null">
+                album_description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{albumName},#{userId},
+            <if test="albumDescription != null">
+                #{albumDescription},
+            </if>
+        </trim>
+
+
     </insert>
 
     <!--通过主键修改数据-->
@@ -70,9 +95,6 @@
         <set>
             <if test="albumName != null and albumName != ''">
                 album_name = #{albumName},
-            </if>
-            <if test="albumTagId != null">
-                album_tag_id = #{albumTagId},
             </if>
             <if test="albumDescription != null and albumDescription != ''">
                 album_description = #{albumDescription},

@@ -52,4 +52,7 @@ public interface LikeService {
      */
     boolean deleteById(Integer id);
 
+    Like addOne(Like like);
+
+    boolean deleteByUserIdAndPicId(Like like);
 }

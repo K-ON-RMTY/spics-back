@@ -76,4 +76,14 @@ public class CollectServiceImpl implements CollectService {
     public boolean deleteById(Integer id) {
         return this.collectDao.deleteById(id) > 0;
     }
+
+    @Override
+    public Collect addOne(Collect collect) {
+        return this.collectDao.addOne(collect);
+    }
+
+    @Override
+    public boolean deleteByUserIdAndAlbumId(Collect collect) {
+        return this.collectDao.deleteByUserIdAndAlbumId(collect) > 0;
+    }
 }

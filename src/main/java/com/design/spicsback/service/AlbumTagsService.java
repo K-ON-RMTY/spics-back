@@ -52,4 +52,10 @@ public interface AlbumTagsService {
      */
     boolean deleteById(Integer id);
 
+    /**
+     * 添加画集标签
+     * @param albumTags
+     * @return
+     */
+    AlbumTags addOne(AlbumTags albumTags);
 }

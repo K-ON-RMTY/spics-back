@@ -1,9 +1,11 @@
 package com.design.spicsback.controller;
 
 import com.design.spicsback.configuration.UploadProperties;
+import com.design.spicsback.dto.TagsForPic;
 import com.design.spicsback.entity.Information;
 import com.design.spicsback.entity.PicTags;
 import com.design.spicsback.entity.Pics;
+import com.design.spicsback.entity.TagForPic;
 import com.design.spicsback.service.PicTagsService;
 import com.design.spicsback.service.PicsService;
 import com.design.spicsback.utils.FileQiniuManager;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,6 +34,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("pics")
+
 public class PicsController {
     /**
      * 服务对象
@@ -163,11 +167,14 @@ public class PicsController {
      * @return
      */
     @PostMapping("confirm/upload")
-    public Information uploadImgsToAlbum (HttpServletRequest request, Integer userId, Integer albumId, String description, List<PicTags> picTags)  {
+    public Information uploadImgsToAlbum (HttpServletRequest request, Integer userId, Integer albumId, String description,@RequestParam List<TagForPic> picTags)  {
         HttpSession session = request.getSession();
         Map<String,MultipartFile> fileMap = (Map<String,MultipartFile>)session.getAttribute("fileMap");
         if (fileMap == null || fileMap.size() == 0) {
             return Information.success("没有图片上传");
+        }
+        if (description.trim().length() ==0 || description.length() > 300) {
+            return Information.error(300,"描述过长");
         }
         // 上传到七牛云
         for (MultipartFile file : fileMap.values()) {
@@ -177,16 +184,14 @@ public class PicsController {
             pic.setAlbumId(albumId);
             pic.setUrl(url);
             pic.setUserId(userId);
-            if (description != null){
-                pic.setDescription(description);
-            }
+            pic.setPicDescription(description);
             Pics insert = picsService.insert(pic);
             // 添加图片标签
-            if (picTags != null) {
-                for (PicTags tags : picTags) {
-                    tags.setPicId(insert.getId());
-                    picTagsService.insert(tags);
-                }
+            for (TagForPic tag : picTags) {
+                PicTags picTag = new PicTags();
+                picTag.setPicTagId(tag.getId());
+                picTag.setPicId(insert.getId());
+                picTagsService.insert(picTag);
             }
         }
         // 删除七牛云上所有缩略图

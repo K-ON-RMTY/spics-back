@@ -52,4 +52,7 @@ public interface CollectService {
      */
     boolean deleteById(Integer id);
 
+    Collect addOne(Collect collect);
+
+    boolean deleteByUserIdAndAlbumId(Collect collect);
 }

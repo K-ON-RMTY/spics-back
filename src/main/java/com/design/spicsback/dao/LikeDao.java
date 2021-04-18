@@ -62,4 +62,7 @@ public interface LikeDao {
      */
     int deleteById(Integer id);
 
+    Like addOne(Like like);
+
+    boolean deleteByUserIdAndPicId(Like like);
 }

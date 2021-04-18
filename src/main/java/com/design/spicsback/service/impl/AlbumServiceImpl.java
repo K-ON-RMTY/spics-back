@@ -17,7 +17,7 @@ import java.util.List;
 @Service("tAlbumService")
 public class AlbumServiceImpl implements AlbumService {
     @Resource
-    private AlbumDao tAlbumDao;
+    private AlbumDao albumDao;
 
     /**
      * 通过ID查询单条数据
@@ -27,7 +27,7 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public Album queryById(Integer id) {
-        return this.tAlbumDao.queryById(id);
+        return this.albumDao.queryById(id);
     }
 
     /**
@@ -39,7 +39,7 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public List<Album> queryAllByLimit(int offset, int limit) {
-        return this.tAlbumDao.queryAllByLimit(offset, limit);
+        return this.albumDao.queryAllByLimit(offset, limit);
     }
 
     /**
@@ -50,7 +50,7 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public Album insert(Album album) {
-        this.tAlbumDao.insert(album);
+        this.albumDao.insert(album);
         return album;
     }
 
@@ -62,7 +62,7 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public Album update(Album album) {
-        this.tAlbumDao.update(album);
+        this.albumDao.update(album);
         return this.queryById(album.getId());
     }
 
@@ -74,6 +74,28 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.tAlbumDao.deleteById(id) > 0;
+        return this.albumDao.deleteById(id) > 0;
+    }
+
+    /**
+     * 查询用户所有的画集
+     *
+     * @param userId 用户主键
+     * @return 画集列表
+     */
+    @Override
+    public List<Album> queryByUserId(Integer userId) {
+        return this.albumDao.queryByUserId(userId);
+    }
+
+    /**
+     * 查询是否重名
+     *
+     * @param album 画集
+     * @return 画集
+     */
+    @Override
+    public Album queryByNameAndUserId(Album album) {
+        return this.albumDao.queryByNameAndUserId(album);
     }
 }

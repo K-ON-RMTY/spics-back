@@ -17,6 +17,13 @@
         where id = #{id}
     </select>
 
+    <select id="queryByTagName" resultMap="TTagForPicMap">
+        select
+            id, user_id, tag_name, create_time
+        from spics.t_tag_for_pic
+        where tag_name = #{tagName}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="TTagForPicMap">
         select
@@ -48,8 +55,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into spics.t_tag_for_pic(user_id, tag_name, create_time)
-        values (#{userId}, #{tagName}, #{createTime})
+        insert into spics.t_tag_for_pic(user_id, tag_name)
+        values (#{userId}, #{tagName})
     </insert>
 
     <!--通过主键修改数据-->

@@ -39,7 +39,6 @@ public class UserController {
         }else {
             // 敏感信息不传回
             user.setPassword("");
-            user.setId(0);
             return Information.success(200,"登录成功",user);
         }
     }
@@ -61,5 +60,20 @@ public class UserController {
             return Information.error(500,"注册失败，重试");
         }
         return Information.success("注册");
+    }
+
+    /**
+     * 更改用户信息
+     * @param user
+     * @return
+     */
+    @PostMapping("update")
+    public Information updateOne(User user){
+        User isUpdated=this.userService.update(user);
+        if(isUpdated!=null){
+            return Information.success("更改");
+        }else {
+            return Information.error(301,"更改失败");
+        }
     }
 }

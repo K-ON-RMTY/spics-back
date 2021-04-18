@@ -76,4 +76,14 @@ public class LikeServiceImpl implements LikeService {
     public boolean deleteById(Integer id) {
         return this.likeDao.deleteById(id) > 0;
     }
+
+    @Override
+    public Like addOne(Like like) {
+        return this.likeDao.addOne(like);
+    }
+
+    @Override
+    public boolean deleteByUserIdAndPicId(Like like) {
+        return this.likeDao.deleteByUserIdAndPicId(like);
+    }
 }

@@ -37,23 +37,41 @@ public class AlbumController {
         return this.albumService.queryById(id);
     }
 
+    @GetMapping("/select/user/{userId}")
+    public Information selectByUserId (@PathVariable Integer userId) {
+        List<Album> albumList = this.albumService.queryByUserId(userId);
+        System.out.println(albumList);
+        if (albumList == null) {
+            return Information.error(501, "没有结果");
+        }
+        return Information.success(200,"画集列表", albumList);
+    }
+
     /**
      * 添加画集
      * @param album 画集信息
-     * @param albumTags 画集标签列表
+     * @param tagIds 画集标签列表
      * @return
      */
     @PostMapping("add")
-    public Information<Album> insertOne(Album album, List<AlbumTags> albumTags) {
+    public Information insertOne(Album album, @RequestParam List<Integer> tagIds) {
         if (album.getAlbumName() ==  null || album.getAlbumName().trim().length() <=0 || album.getAlbumName().length()>10) {
-            return Information.error(300,"画集名过长");
+            return Information.error(300,"画集名错误");
+        }
+        // 查询是否重名
+        Album isMore = this.albumService.queryByNameAndUserId(album);
+        if(isMore != null) {
+            return Information.error(300,"重复画集名");
         }
         Album insert = albumService.insert(album);
         if (insert != null) {
             // 把标签加上
-            if (albumTags != null) {
-                for (AlbumTags tags : albumTags) {
-                    albumTagsService.insert(tags);
+            if (tagIds != null) {
+                for (Integer tid : tagIds) {
+                    AlbumTags tag = new AlbumTags();
+                    tag.setTagId(tid);
+                    tag.setAlbumId(insert.getId());
+                    albumTagsService.insert(tag);
                 }
             }
             return Information.success(200,"添加成功", album);
@@ -61,6 +79,8 @@ public class AlbumController {
             return Information.error(501,"未知错误");
         }
     }
+
+
 
 
 }

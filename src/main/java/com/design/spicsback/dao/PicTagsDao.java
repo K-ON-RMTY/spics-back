@@ -62,4 +62,10 @@ public interface PicTagsDao {
      */
     int deleteById(Integer id);
 
+    /**
+     * 添加画集
+     * @param picTags
+     * @return
+     */
+    PicTags addOne(PicTags picTags);
 }
